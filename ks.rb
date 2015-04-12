@@ -1,24 +1,5 @@
 require 'json'
-
-class Project
-  attr_accessor :name, :target_amount
-
-  def initialize(name, target_amount)
-    @name = name
-    @target_amount = target_amount
-  end
-
-  def self.write_project_to_file(project)
-    # openfile write file
-    puts "project was written to file"
-  end
-
-  def back
-    # load file
-    # read line
-    # find records that titled back
-  end
-end
+require './project.rb'
 
 class Backer
   attr_accessor :backer_name, :project_name, :cc_number, :backing_amount
@@ -47,6 +28,7 @@ if (ARGV[0] == "project")
     project = {:name => new_project.name, :target_amount => new_project.target_amount}.to_json
     @project_file.puts project
     @project_file.close
+    puts "#{ARGV[1]} was created with a target of $#{ARGV[2]}"
   end
 elsif (ARGV[0] == "back")
   # input: <given name> <project> <credit card number> <backing amount>
