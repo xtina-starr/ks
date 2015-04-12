@@ -1,0 +1,9 @@
+{"name":"colaboratory","target_amount":"$1500"}
+{"name":"eclectic-collective","target_amount":"$5500"}
+{"name":"Arts-Crafts","target_amount":"$150"}
+{"name":"Game-On","target_amount":"$2000"}
+{"name":"Girls-Run-The-World","target_amount":"$15000"}
+{"name":"Neo-Pop-Culture","target_amount":"500"}
+{"name":"Neo-Pop-Culture","target_amount":"500"}
+{"name":"Neo-Pop-Culture","target_amount":"$500.50"}
+{"name":"Neo-Pop-Culture","target_amount":"$2500.50"}
