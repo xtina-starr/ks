@@ -12,3 +12,4 @@
 {"name":"Dwayne","project_name":"cute-kittens","cc_number":"2635","backing_amount":"150"}
 {"name":"Sarah","project_name":"cute-kittens","cc_number":"777754","backing_amount":"50"}
 {"name":"Tina","project_name":"cute-kittens","cc_number":"2222","backing_amount":"70.50"}
+{"name":"John","project_name":"cute-kittens","cc_number":"2222","backing_amount":"80.50"}
