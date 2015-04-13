@@ -34,19 +34,12 @@ elsif (ARGV[0] == "back")
     end
   end
 elsif (ARGV[0] == "list")
-  # input: <project name> //list Awesome_Sauce 
-  # => 
-  # -- John backed for $50  
-  # -- Jane backed for $50  
-  # -- Mary backed for $400 
-  # puts "not yet implemented"
+  # input: <project name>
 
   # Make sure input arg is passed in with 'list' command
   if (ARGV[1] == nil)
     puts "Please provide a project name."
   else
-    project_input = ARGV[1]
-
     # Check if project exist in projects.txt file // maybe not
     @all_projects = []
     File.open('projects.txt', 'r') do |file|
@@ -56,14 +49,13 @@ elsif (ARGV[0] == "list")
     end
 
     # Check if project exist in projects.txt file // maybe not
-
-    matches = @all_projects.select {|entry| entry["name"] == project_input}
+    matches = @all_projects.select {|entry| entry["name"] == ARGV[1]}
     num_of_matches = matches.count
       
     if (num_of_matches > 0)
       puts "do some stuff."
     else
-      puts project_input + " does not exist."
+      puts ARGV[1] + " does not exist."
     end
 
     # Read/load backers.txt file and push each entry into @backed_projects array
@@ -75,7 +67,7 @@ elsif (ARGV[0] == "list")
     end
 
     # Iterate over @backed_proojects array to find backers that backed x project
-    results = @backed_projects.select { |p| p["project_name"] == project_input }
+    results = @backed_projects.select { |p| p["project_name"] == ARGV[1] }
 
     # Iterate again to print backers name and amt
     backed_amt = 0
@@ -91,7 +83,7 @@ elsif (ARGV[0] == "list")
     
     amt_needed = matches[0]["target_amount"][1..-1].to_i - backed_amt
 
-    puts amt_needed == 0 ? project_input + " is successful!" : project_input + " needs $#{amt_needed} more dollars to be successful"
+    puts amt_needed == 0 ? ARGV[1] + " is successful!" : ARGV[1] + " needs $#{amt_needed} more dollars to be successful"
     # Print whether a project is successful
     # - if not print how much is needed
 
