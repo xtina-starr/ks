@@ -6,6 +6,7 @@ require './read_write.rb'
 @project_file = File.new("projects.txt", "a")
 @backer_file = File.new("backers.txt", "a")
 
+# Methods for 'list' command
 def check_for_project_in_project_file(project_name)
   ReadWrite.get_all_projects.select {|entry| entry["name"] == project_name}
 end
@@ -34,6 +35,17 @@ def find_backers_for_project_and_return_amt(project)
       puts "Be the first to back this project."
     end
     backed_amt
+end
+
+# Methods for 'backer' command
+def project_backed_by_given_name(name)
+  arr = []
+  ReadWrite.get_all_backed.each do |back|
+    if (JSON.parse(back)["name"] == name)
+      arr << JSON.parse(back)
+    end
+  end
+  arr
 end
 
 if (ARGV[0] == "project")
@@ -90,35 +102,8 @@ elsif (ARGV[0] == "backer")
   else
     given_name = ARGV[1]
     
-
-    # Read/load projects.txt file and push each entry into @all_backers array
-    @all_backers = []
-    File.open('backers.txt', 'r') do |file|
-      while line = file.gets
-        @all_backers << line.chomp
-      end
-    end
-
-    # Iterate over @all_backers array to find projects that x backed
-    # Push into results array
-    arr = []
-    @all_backers.each do |back|
-      # back is a string (serialized) obj and needs to be converted to a hash
-
-      # backer_obj = JSON.parse(back)
-      # backer_obj = back #.to_json.delete!("\\")
-      # puts JSON.parse(backer_obj)["name"]
-      # puts given_name
-      if (JSON.parse(back)["name"] == given_name)
-        arr << JSON.parse(back)
-      end
-    end
-    
-    # Iterate again:
-    #   -If there are matches print backed project name and amt for x user
-    #   -Else print "This user has not backed any projects."
-    if (arr.count > 0)
-      arr.each do |backed_project|
+    if (project_backed_by_given_name(given_name).count > 0)
+      project_backed_by_given_name(given_name).each do |backed_project|
         puts "Backed " + backed_project["project_name"] + " for " + backed_project["backing_amount"]
       end
     else
