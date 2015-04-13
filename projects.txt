@@ -7,7 +7,7 @@
 {"name":"Neo-Pop-Culture","target_amount":"500"}
 {"name":"Neo-Pop-Culture","target_amount":"$500.50"}
 {"name":"Neo-Pop-Culture","target_amount":"$2500.50"}
-{"name":"cute_kittens","target_amount":"$1000"}
+{"name":"cute-kittens","target_amount":"$1000"}
 {"name":"cute_kittens2","target_amount":"$1500"}
 {"name":"cute_kittens3","target_amount":"$2000"}
 {"name":"cute_kittens4","target_amount":"$2500"}
