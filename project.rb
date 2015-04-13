@@ -19,14 +19,4 @@ class Project
     puts "#{input_args[1]} was created with a target of $#{input_args[2]}"
   end
 
-  def self.write_project_to_file(project)
-    # openfile write file
-    puts "project was written to file"
-  end
-
-  def back
-    # load file
-    # read line
-    # find records that titled back
-  end
 end
