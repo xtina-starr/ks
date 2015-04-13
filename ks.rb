@@ -17,15 +17,6 @@ elsif (ARGV[0] == "back")
   if (ARGV[1] == nil)
     puts "Please provide a project name."
   else
-    # given name should be alphanumeric
-    # validate length for given name
-    # Credit card numbers may vary in length, up to 19 characters.
-    # Credit card numbers will always be numeric.
-    # Card numbers should be validated using Luhn-10.
-    # Cards that fail Luhn-10 will display an error.
-    # Cards that have already been added will display an error.
-    # Backing dollar amounts should NOT use the $ currency symbol as a prefix to avoid issues with escaping but should accept dollars and cents
-
     # Check if project exists in projects.txt file else project doesn't exist
     @all_projects = []
     File.open('projects.txt', 'r') do |file|
