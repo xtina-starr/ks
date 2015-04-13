@@ -6,6 +6,24 @@ require './read_write.rb'
 @project_file = File.new("projects.txt", "a")
 @backer_file = File.new("backers.txt", "a")
 
+def find_backers_for_project(project)
+  # Iterate over @backed_proojects array to find backers that backed x project
+  results = ReadWrite.get_all_backed_projects.select { |p| p["project_name"] == project }
+
+  # Iterate again to print backers name and amt
+  backed_amt = 0
+
+    if (results.count > 0)
+      results.each do |b|
+        puts b["name"] + " backed #{b["project_name"]} for $#{b["backing_amount"]}"
+        backed_amt = backed_amt + b["backing_amount"].to_i
+      end
+    else
+      puts "Be the first to back this project."
+    end
+    backed_amt
+end
+
 if (ARGV[0] == "project")
   # Make sure input arg is passed in with 'project' command
   if (ARGV[1] == nil)
@@ -53,19 +71,23 @@ elsif (ARGV[0] == "list")
     end
 
     # Iterate over @backed_proojects array to find backers that backed x project
-    results = ReadWrite.get_all_backed_projects.select { |p| p["project_name"] == ARGV[1] }
+    # backers_that_backed(ARGV[1])
+
+    # results = ReadWrite.get_all_backed_projects.select { |p| p["project_name"] == ARGV[1] }
 
     # Iterate again to print backers name and amt
-    backed_amt = 0
+    # backed_amt = 0
 
-    if (results.count > 0)
-      results.each do |b|
-        puts b["name"] + " backed #{b["project_name"]} for $#{b["backing_amount"]}"
-        backed_amt = backed_amt + b["backing_amount"].to_i
-      end
-    else
-      puts "Be the first to back this project."
-    end
+    # if (results.count > 0)
+    #   results.each do |b|
+    #     puts b["name"] + " backed #{b["project_name"]} for $#{b["backing_amount"]}"
+    #     backed_amt = backed_amt + b["backing_amount"].to_i
+    #   end
+    # else
+    #   puts "Be the first to back this project."
+    # end
+
+    backed_amt = find_backers_for_project(ARGV[1])
     
     amt_needed = matches[0]["target_amount"][1..-1].to_i - backed_amt
 
@@ -116,5 +138,7 @@ elsif (ARGV[0] == "backer")
     end
   end
 end
+
+
 
 
