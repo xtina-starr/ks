@@ -1,6 +1,7 @@
 require 'json'
 require './project.rb'
 require './backer.rb'
+require './read_write.rb'
 
 @project_file = File.new("projects.txt", "a")
 @backer_file = File.new("backers.txt", "a")
@@ -40,16 +41,9 @@ elsif (ARGV[0] == "list")
   if (ARGV[1] == nil)
     puts "Please provide a project name."
   else
-    # Check if project exist in projects.txt file // maybe not
-    @all_projects = []
-    File.open('projects.txt', 'r') do |file|
-      while entry = file.gets
-        @all_projects << JSON.parse(entry.chomp)
-      end
-    end
 
     # Check if project exist in projects.txt file // maybe not
-    matches = @all_projects.select {|entry| entry["name"] == ARGV[1]}
+    matches = ReadWrite.get_all_projects.select {|entry| entry["name"] == ARGV[1]}
     num_of_matches = matches.count
       
     if (num_of_matches > 0)
@@ -58,16 +52,8 @@ elsif (ARGV[0] == "list")
       puts ARGV[1] + " does not exist."
     end
 
-    # Read/load backers.txt file and push each entry into @backed_projects array
-    @backed_projects = []
-    File.open('backers.txt', 'r') do |file|
-      while entry = file.gets
-        @backed_projects << JSON.parse(entry.chomp)
-      end
-    end
-
     # Iterate over @backed_proojects array to find backers that backed x project
-    results = @backed_projects.select { |p| p["project_name"] == ARGV[1] }
+    results = ReadWrite.get_all_backed_projects.select { |p| p["project_name"] == ARGV[1] }
 
     # Iterate again to print backers name and amt
     backed_amt = 0
@@ -84,9 +70,6 @@ elsif (ARGV[0] == "list")
     amt_needed = matches[0]["target_amount"][1..-1].to_i - backed_amt
 
     puts amt_needed == 0 ? ARGV[1] + " is successful!" : ARGV[1] + " needs $#{amt_needed} more dollars to be successful"
-    # Print whether a project is successful
-    # - if not print how much is needed
-
 
   end
   
