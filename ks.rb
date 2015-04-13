@@ -2,7 +2,6 @@ require 'json'
 require './project.rb'
 require './backer.rb'
 require './read_write.rb'
-include ReadWrite
 
 @project_file = File.new("projects.txt", "a")
 @backer_file = File.new("backers.txt", "a")
@@ -48,8 +47,6 @@ def project_backed_by_given_name(name)
   end
   arr
 end
-
-
 
 if (ARGV[0] == "project")
   # Make sure input arg is passed in with 'project' command
@@ -108,7 +105,3 @@ elsif (ARGV[0] == "backer")
 else
   puts "#{ARGV[0]}: command not found"
 end
-
-
-
-
