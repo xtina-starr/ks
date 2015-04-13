@@ -10,10 +10,6 @@ if (ARGV[0] == "project")
   if (ARGV[1] == nil)
     puts "Please provide a project name."
   else
-    # validate length
-    # accept the $ currency symbol, dollars and cents
-    # Target dollar amounts should accept the $ currency symbol as a prefix and accept both dollars and cents.
-    
     Project.create_new_project(ARGV, @project_file)
   end
 elsif (ARGV[0] == "back")
@@ -41,12 +37,7 @@ elsif (ARGV[0] == "back")
     exists = @all_projects.select {|entry| entry["name"] == ARGV[2]}.count > 0
     
     if (exists)
-      new_backer = Backer.new(ARGV[1], ARGV[2], ARGV[3], ARGV[4])
-      backer = {:name => new_backer.backer_name, :project_name => new_backer.project_name, :cc_number => new_backer.cc_number, :backing_amount => new_backer.backing_amount}.to_json
-      
-      @backer_file.puts backer
-      @backer_file.close
-      puts "#{ARGV[1]} backed project #{ARGV[2]} for $#{ARGV[4]}"
+      Backer.back_project(ARGV, @backer_file)
     else
       puts "Project does not exist. Please enter a valid project name."
     end
@@ -116,7 +107,7 @@ elsif (ARGV[0] == "list")
 
   end
   
-  elsif (ARGV[0] == "backer")
+elsif (ARGV[0] == "backer")
   # Make sure input arg is passed in with 'backer' command
   if ARGV[1] == nil
     puts "Please provide a backer name."
