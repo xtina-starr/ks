@@ -2,17 +2,6 @@ require 'json'
 require './project.rb'
 require './backer.rb'
 
-# class Backer
-#   attr_accessor :backer_name, :project_name, :cc_number, :backing_amount
-
-#   def initialize(backer_name, project_name, cc_number, backing_amount)
-#     @backer_name = backer_name
-#     @project_name = project_name
-#     @cc_number = cc_number
-#     @backing_amount = backing_amount
-#   end
-# end
-
 @project_file = File.new("projects.txt", "a")
 @backer_file = File.new("backers.txt", "a")
 
@@ -25,11 +14,7 @@ if (ARGV[0] == "project")
     # accept the $ currency symbol, dollars and cents
     # Target dollar amounts should accept the $ currency symbol as a prefix and accept both dollars and cents.
     
-    new_project = Project.new(ARGV[1], "$" + ARGV[2])
-    project = {:name => new_project.name, :target_amount => new_project.target_amount}.to_json
-    @project_file.puts project
-    @project_file.close
-    puts "#{ARGV[1]} was created with a target of $#{ARGV[2]}"
+    Project.create_new_project(ARGV, @project_file)
   end
 elsif (ARGV[0] == "back")
   # input: <given name> <project> <credit card number> <backing amount>
