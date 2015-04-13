@@ -60,15 +60,7 @@ elsif (ARGV[0] == "back")
   if (ARGV[1] == nil)
     puts "Please provide a project name."
   else
-    # Check if project exists in projects.txt file else project doesn't exist
-    @all_projects = []
-    File.open('projects.txt', 'r') do |file|
-      while entry = file.gets
-        @all_projects << JSON.parse(entry.chomp)
-      end
-    end
-
-    exists = @all_projects.select {|entry| entry["name"] == ARGV[2]}.count > 0
+    exists = ReadWrite.get_all_projects.select {|entry| entry["name"] == ARGV[2]}.count > 0
     
     if (exists)
       Backer.back_project(ARGV, @backer_file)
@@ -110,6 +102,8 @@ elsif (ARGV[0] == "backer")
       puts given_name + " has not backed any projects."
     end
   end
+else
+  puts "#{ARGV[0]}: command not found"
 end
 
 
