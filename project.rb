@@ -7,6 +7,11 @@ class Project
   end
 
   def self.create_new_project(input_args, project_file)
+    # ---validate input---
+    # validate length
+    # accept the $ currency symbol, dollars and cents
+    # Target dollar amounts should accept the $ currency symbol as a prefix and accept both dollars and cents.
+
     new_project = Project.new(input_args[1], "$" + input_args[2])
     project = {:name => new_project.name, :target_amount => new_project.target_amount}.to_json
     project_file.puts project
