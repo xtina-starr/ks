@@ -1,16 +1,17 @@
 require 'json'
 require './project.rb'
+require './backer.rb'
 
-class Backer
-  attr_accessor :backer_name, :project_name, :cc_number, :backing_amount
+# class Backer
+#   attr_accessor :backer_name, :project_name, :cc_number, :backing_amount
 
-  def initialize(backer_name, project_name, cc_number, backing_amount)
-    @backer_name = backer_name
-    @project_name = project_name
-    @cc_number = cc_number
-    @backing_amount = backing_amount
-  end
-end
+#   def initialize(backer_name, project_name, cc_number, backing_amount)
+#     @backer_name = backer_name
+#     @project_name = project_name
+#     @cc_number = cc_number
+#     @backing_amount = backing_amount
+#   end
+# end
 
 @project_file = File.new("projects.txt", "a")
 @backer_file = File.new("backers.txt", "a")
@@ -52,7 +53,7 @@ elsif (ARGV[0] == "back")
       end
     end
 
-    exists = @all_projects.select {|entry| entry["name"] == ARGV[1]}.count > 0
+    exists = @all_projects.select {|entry| entry["name"] == ARGV[2]}.count > 0
     
     if (exists)
       new_backer = Backer.new(ARGV[1], ARGV[2], ARGV[3], ARGV[4])
@@ -60,6 +61,7 @@ elsif (ARGV[0] == "back")
       
       @backer_file.puts backer
       @backer_file.close
+      puts "#{ARGV[1]} backed project #{ARGV[2]} for $#{ARGV[4]}"
     else
       puts "Project does not exist. Please enter a valid project name."
     end
@@ -105,16 +107,19 @@ elsif (ARGV[0] == "list")
       end
     end
 
-    # puts @backed_projects
-
     # Iterate over @backed_proojects array to find backers that backed x project
     results = @backed_projects.select { |p| p["project_name"] == project_input }
 
     # Iterate again to print backers name and amt
     backed_amt = 0
-    results.each do |b|
-      puts b["name"] + " backed for $#{backer["backing_amount"]}"
-      backed_amt = backed_amt + backer["backing_amount"].to_i
+
+    if (results.count > 0)
+      results.each do |b|
+        puts b["name"] + " backed #{b["project_name"]} for $#{b["backing_amount"]}"
+        backed_amt = backed_amt + b["backing_amount"].to_i
+      end
+    else
+      puts "Be the first to back this project."
     end
     
     amt_needed = matches[0]["target_amount"][1..-1].to_i - backed_amt
