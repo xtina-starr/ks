@@ -16,3 +16,4 @@
 {"name":"Christina","project_name":"cool","cc_number":"7468934","backing_amount":"50"}
 {"name":"C","project_name":"cool","cc_number":"7468934","backing_amount":"40"}
 {"name":"Bookis","project_name":"cool","cc_number":"7468934","backing_amount":"40"}
+{"name":"Christina","project_name":"new-project","cc_number":"1203045","backing_amount":"200"}
