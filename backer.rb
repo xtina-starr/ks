@@ -1,3 +1,5 @@
+require 'luhn'
+
 class Backer
   attr_accessor :backer_name, :project_name, :cc_number, :backing_amount
 
@@ -9,22 +11,27 @@ class Backer
   end
 
   def self.back_project(input_args)
-    # given name should be alphanumeric
-    # validate length for given name
-    # Credit card numbers may vary in length, up to 19 characters.
     # Credit card numbers will always be numeric.
-    # Card numbers should be validated using Luhn-10.
-    # Cards that fail Luhn-10 will display an error.
     # Cards that have already been added will display an error.
-    # Backing dollar amounts should NOT use the $ currency symbol as a prefix to avoid issues with escaping but should accept dollars and cents
-    backer_file = File.new("backers.txt", "a")
-
-    new_backer = Backer.new(input_args[1], input_args[2], input_args[3], input_args[4])
-    backer = {:name => new_backer.backer_name, :project_name => new_backer.project_name, :cc_number => new_backer.cc_number, :backing_amount => new_backer.backing_amount}.to_json
+    # Should accept dollars and cents
+    if(input_args[1].length < 4 || input_args[1].length > 21)
+      puts "#{input_args[1]} must not be shorter that 4 characters and no longer than 20"
+    else
+      if (Luhn.valid?(input_args[3]) && input_args[3].length < 20)
+        new_backer = Backer.new(input_args[1], input_args[2], input_args[3], input_args[4])
+      else
+        puts "ERROR: This card is invalid"
+      end
+    end
     
-    backer_file.puts backer
+    backer_file = File.new("backers.txt", "a")
+    backer_file.puts new_backer
     backer_file.close
     puts "#{input_args[1]} backed project #{input_args[2]} for $#{input_args[4]}"
+  end
+
+  def to_json
+    {:name => new_backer.backer_name, :project_name => new_backer.project_name, :cc_number => new_backer.cc_number, :backing_amount => new_backer.backing_amount}.to_json
   end
 
   def self.find_all_project_by_backer(name)
