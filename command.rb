@@ -43,10 +43,12 @@ class Command
       puts "Please provide a project name."
     else
 
-      if (verify_project_exist(args[1]))
-        backed_amt = find_backers_for_project_and_return_amt(args[1])
+      project = Project.find_by_name(args[1]).first
+
+      if (project)
+        # backed_amt = find_backers_for_project_and_return_amt(args[1])
         
-        amt_needed = check_for_project_in_project_file(args[1])[0]["target_amount"][1..-1].to_i - backed_amt
+        amt_needed = project["target_amount"].to_i - Backer.return_backed_amt_for_project(args[1])
 
         puts amt_needed == 0 ? args[1] + " is successful!" : args[1] + " needs $#{amt_needed} more dollars to be successful"
       else

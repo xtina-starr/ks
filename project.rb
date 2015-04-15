@@ -13,7 +13,7 @@ class Project
     # Target dollar amounts should accept the $ currency symbol as a prefix and accept both dollars and cents.
 
     project_file = File.new("projects.txt", "a")
-    new_project = Project.new(input_args[1], "$" + input_args[2])
+    new_project = Project.new(input_args[1], input_args[2])
     
     project_file.puts new_project.to_json
     project_file.close
