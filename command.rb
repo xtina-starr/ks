@@ -51,7 +51,7 @@ class Command
         end
         amt_needed = project["target_amount"].to_i - Backer.return_backed_amt_for_project(args[1])
 
-        puts amt_needed == 0 ? args[1] + " is successful!" : args[1] + " needs $#{amt_needed} more dollars to be successful"
+        puts amt_needed <= 0 ? args[1] + " is successful!" : args[1] + " needs $#{amt_needed} more dollars to be successful"
       else
         puts args[1] + " does not exist."
       end
