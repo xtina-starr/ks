@@ -28,13 +28,13 @@ class Backer
   end
 
   def self.find_all_backers_by_project_name(name)
-    @backed_projects = []
+    backed_projects = []
     File.open('backers.txt', 'r') do |file|
       while entry = file.gets
-        @backed_projects << JSON.parse(entry.chomp)
+        backed_projects << JSON.parse(entry.chomp)
       end
     end
-    @backed_projects.select {|project| project["project_name"] == name}
+    backed_projects.select {|project| project["project_name"] == name}
   end
 
   def self.return_backed_amt_for_project(name)
@@ -42,7 +42,8 @@ class Backer
 
     backed_amt = 0
     projects.each do |project|
-      backed_amt = backed_amt + project["target_amount"].to_i
+      puts project["backing_amount"].to_i
+      backed_amt = backed_amt + project["backing_amount"].to_i
     end
     backed_amt
   end
