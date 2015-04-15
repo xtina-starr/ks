@@ -11,30 +11,40 @@ class Backer
   end
 
   def self.back_project(input_args)
-    # Cards that have already been added will display an error.
-    # Should accept dollars and cents
     if(input_args[1].length < 4 || input_args[1].length > 21)
       puts "#{input_args[1]} must not be shorter that 4 characters and no longer than 20"
+    elsif (Backer.credit_card_exist(input_args[3]))
+      puts "ERROR: That card has already been added by another user!"
     else
-      if (Luhn.valid?(input_args[3]) && valid_cc?(input_args[3].to_s))#input_args[3].length < 20
+      if (Backer.valid_cc?(input_args[3]))
         new_backer = Backer.new(input_args[1], input_args[2], input_args[3], input_args[4])
+
+        backer_file = File.new("backers.txt", "a")
+        backer_file.puts new_backer.to_json
+        backer_file.close
+        puts "#{input_args[1]} backed project #{input_args[2]} for $#{input_args[4]}"
       else
         puts "ERROR: This card is invalid"
       end
-    end
-    
-    backer_file = File.new("backers.txt", "a")
-    backer_file.puts new_backer
-    backer_file.close
-    puts "#{input_args[1]} backed project #{input_args[2]} for $#{input_args[4]}"
-  end
-
-  def valid_cc?(cc)
-    /^\d{4,19}$/ === cc
+    end  
   end
 
   def to_json
-    {:name => new_backer.backer_name, :project_name => new_backer.project_name, :cc_number => new_backer.cc_number, :backing_amount => new_backer.backing_amount}.to_json
+    {:name => self.backer_name, :project_name => self.project_name, :cc_number => self.cc_number, :backing_amount => self.backing_amount}.to_json
+  end
+
+  def self.valid_cc?(credit_card)
+    /^\d{4,19}$/ === credit_card
+  end
+
+  def self.credit_card_exist(credit_card)
+    backed_projects = []
+    File.open('backers.txt', 'r') do |file|
+      while entry = file.gets
+        backed_projects << JSON.parse(entry.chomp)
+      end
+    end
+    backed_projects.select {|backed| backed["cc_number"] == credit_card}.length > 0
   end
 
   def self.find_all_project_by_backer(name)
