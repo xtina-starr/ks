@@ -7,17 +7,19 @@ class Project
   end
 
   def self.create_new_project(input_args)
-    # ---validate input---
-    # validate length
-    # accept the $ currency symbol, dollars and cents
     # Target dollar amounts should accept the $ currency symbol as a prefix and accept both dollars and cents.
 
-    project_file = File.new("projects.txt", "a")
-    new_project = Project.new(input_args[1], input_args[2])
-    
-    project_file.puts new_project.to_json
-    project_file.close
-    puts "#{input_args[1]} was created with a target of $#{input_args[2]}"
+    if (input_args[1].length < 4)
+      puts "#{input_args[1]} is too short."
+    elsif (name > 21)
+      puts "#{input_args[1]} is too long."
+    else
+      new_project = Project.new(input_args[1], input_args[2])
+      project_file = File.new("projects.txt", "a")
+      project_file.puts new_project.to_json
+      project_file.close
+      puts "#{input_args[1]} was created with a target of $#{input_args[2]}"
+    end
   end
 
   def to_json
