@@ -10,6 +10,8 @@ class Command
       list(args)
     when "backer"
       backer(args)
+    else
+      puts "#{args[0]} is not recognized as a command."
     end
   end
 
