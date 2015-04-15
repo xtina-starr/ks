@@ -52,7 +52,6 @@ class Backer
 
     backed_amt = 0
     projects.each do |project|
-      puts project["backing_amount"].to_i
       backed_amt = backed_amt + project["backing_amount"].to_i
     end
     backed_amt
