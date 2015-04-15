@@ -11,13 +11,12 @@ class Backer
   end
 
   def self.back_project(input_args)
-    # Credit card numbers will always be numeric.
     # Cards that have already been added will display an error.
     # Should accept dollars and cents
     if(input_args[1].length < 4 || input_args[1].length > 21)
       puts "#{input_args[1]} must not be shorter that 4 characters and no longer than 20"
     else
-      if (Luhn.valid?(input_args[3]) && input_args[3].length < 20)
+      if (Luhn.valid?(input_args[3]) && valid_cc?(input_args[3].to_s))#input_args[3].length < 20
         new_backer = Backer.new(input_args[1], input_args[2], input_args[3], input_args[4])
       else
         puts "ERROR: This card is invalid"
@@ -28,6 +27,10 @@ class Backer
     backer_file.puts new_backer
     backer_file.close
     puts "#{input_args[1]} backed project #{input_args[2]} for $#{input_args[4]}"
+  end
+
+  def valid_cc?(cc)
+    /^\d{4,19}$/ === cc
   end
 
   def to_json
