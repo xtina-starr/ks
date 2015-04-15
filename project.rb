@@ -24,4 +24,14 @@ class Project
     {:name => self.name, :target_amount => self.target_amount}.to_json
   end
 
+  def self.find_by_name(name)
+    @all_projects = []
+    File.open('projects.txt', 'r') do |file|
+      while entry = file.gets
+        @all_projects << JSON.parse(entry.chomp)
+      end
+    end
+    @all_projects.select {|project| project["name"] == name}
+  end
+
 end

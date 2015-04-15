@@ -51,60 +51,53 @@ end
 
 Command.new(ARGV)
 
-if (ARGV[0] == "project")
-  # Make sure input arg is passed in with 'project' command
-  # if (ARGV[1] == nil)
-  #   puts "Please provide a project name."
-  # else
-  #   Project.create_new_project(ARGV, @project_file)
-  # end
-elsif (ARGV[0] == "back")
-  # input: <given name> <project> <credit card number> <backing amount>
-  if (ARGV[1] == nil)
-    puts "Please provide a project name."
-  else
-    exists = ReadWrite.get_all_projects.select {|entry| entry["name"] == ARGV[2]}.count > 0
+# if (ARGV[0] == "back")
+#   # input: <given name> <project> <credit card number> <backing amount>
+#   if (ARGV[1] == nil)
+#     puts "Please provide a project name."
+#   else
+#     exists = ReadWrite.get_all_projects.select {|entry| entry["name"] == ARGV[2]}.count > 0
     
-    if (exists)
-      Backer.back_project(ARGV, @backer_file)
-    else
-      puts "Project does not exist. Please enter a valid project name."
-    end
-  end
-elsif (ARGV[0] == "list")
-  # input: <project name>
+#     if (exists)
+#       Backer.back_project(ARGV, @backer_file)
+#     else
+#       puts "Project does not exist. Please enter a valid project name."
+#     end
+#   end
+#   if (ARGV[0] == "list")
+#   # input: <project name>
 
-  # Make sure input arg is passed in with 'list' command
-  if (ARGV[1] == nil)
-    puts "Please provide a project name."
-  else
+#   # Make sure input arg is passed in with 'list' command
+#   if (ARGV[1] == nil)
+#     puts "Please provide a project name."
+#   else
 
-    if (verify_project_exist(ARGV[1]))
-      backed_amt = find_backers_for_project_and_return_amt(ARGV[1])
+#     if (verify_project_exist(ARGV[1]))
+#       backed_amt = find_backers_for_project_and_return_amt(ARGV[1])
       
-      amt_needed = check_for_project_in_project_file(ARGV[1])[0]["target_amount"][1..-1].to_i - backed_amt
+#       amt_needed = check_for_project_in_project_file(ARGV[1])[0]["target_amount"][1..-1].to_i - backed_amt
 
-      puts amt_needed == 0 ? ARGV[1] + " is successful!" : ARGV[1] + " needs $#{amt_needed} more dollars to be successful"
-    else
-      puts ARGV[1] + " does not exist."
-    end
+#       puts amt_needed == 0 ? ARGV[1] + " is successful!" : ARGV[1] + " needs $#{amt_needed} more dollars to be successful"
+#     else
+#       puts ARGV[1] + " does not exist."
+#     end
 
-  end
-elsif (ARGV[0] == "backer")
-  # Make sure input arg is passed in with 'backer' command
-  if ARGV[1] == nil
-    puts "Please provide a backer name."
-  else
-    given_name = ARGV[1]
+#   end
+# elsif (ARGV[0] == "backer")
+#   # Make sure input arg is passed in with 'backer' command
+#   if ARGV[1] == nil
+#     puts "Please provide a backer name."
+#   else
+#     given_name = ARGV[1]
     
-    if (project_backed_by_given_name(given_name).count > 0)
-      project_backed_by_given_name(given_name).each do |backed_project|
-        puts "Backed " + backed_project["project_name"] + " for " + backed_project["backing_amount"]
-      end
-    else
-      puts given_name + " has not backed any projects."
-    end
-  end
-else
-  puts "#{ARGV[0]}: command not found"
-end
+#     if (project_backed_by_given_name(given_name).count > 0)
+#       project_backed_by_given_name(given_name).each do |backed_project|
+#         puts "Backed " + backed_project["project_name"] + " for " + backed_project["backing_amount"]
+#       end
+#     else
+#       puts given_name + " has not backed any projects."
+#     end
+#   end
+# else
+#   puts "#{ARGV[0]}: command not found"
+# end
