@@ -7,11 +7,9 @@ class Project
   end
 
   def self.create_new_project(input_args)
-    # Target dollar amounts should accept the $ currency symbol as a prefix and accept both dollars and cents.
-
     if (input_args[1].length < 4)
       puts "#{input_args[1]} is too short."
-    elsif (name > 21)
+    elsif (input_args[1].length > 21)
       puts "#{input_args[1]} is too long."
     else
       new_project = Project.new(input_args[1], input_args[2])
