@@ -15,3 +15,4 @@
 {"name":"Awesome_Sauce","target_amount":"$500"}
 {"name":"cool","target_amount":"2000"}
 {"name":"new-project","target_amount":"2300"}
+{"name":"temp","target_amount":"1234"}
