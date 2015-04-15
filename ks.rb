@@ -2,6 +2,7 @@ require 'json'
 require './project.rb'
 require './backer.rb'
 require './read_write.rb'
+require './command.rb'
 
 @project_file = File.new("projects.txt", "a")
 @backer_file = File.new("backers.txt", "a")
@@ -48,13 +49,15 @@ def project_backed_by_given_name(name)
   arr
 end
 
+Command.new(ARGV)
+
 if (ARGV[0] == "project")
   # Make sure input arg is passed in with 'project' command
-  if (ARGV[1] == nil)
-    puts "Please provide a project name."
-  else
-    Project.create_new_project(ARGV, @project_file)
-  end
+  # if (ARGV[1] == nil)
+  #   puts "Please provide a project name."
+  # else
+  #   Project.create_new_project(ARGV, @project_file)
+  # end
 elsif (ARGV[0] == "back")
   # input: <given name> <project> <credit card number> <backing amount>
   if (ARGV[1] == nil)
