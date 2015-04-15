@@ -46,15 +46,30 @@ class Command
       project = Project.find_by_name(args[1]).first
 
       if (project)
-        # backed_amt = find_backers_for_project_and_return_amt(args[1])
-        
         amt_needed = project["target_amount"].to_i - Backer.return_backed_amt_for_project(args[1])
 
         puts amt_needed == 0 ? args[1] + " is successful!" : args[1] + " needs $#{amt_needed} more dollars to be successful"
       else
         puts args[1] + " does not exist."
       end
+    end
+  end
 
+  def backer(args)
+    # Make sure input arg is passed in with 'backer' command
+    if args[1] == nil
+      puts "Please provide a backer name."
+    else
+
+      projects_backed_by_given_name = Backer.find_all_project_by_backer(args[1])
+
+      if (projects_backed_by_given_name.length > 0)
+        projects_backed_by_given_name.each do |backed_project|
+          puts "Backed " + backed_project["project_name"] + " for " + backed_project["backing_amount"]
+        end
+      else
+        puts args[1] + " has not backed any projects."
+      end
     end
   end
 
