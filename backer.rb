@@ -27,6 +27,16 @@ class Backer
     puts "#{input_args[1]} backed project #{input_args[2]} for $#{input_args[4]}"
   end
 
+  def self.find_all_project_by_backer(name)
+    backed_projects = []
+    File.open('backers.txt', 'r') do |file|
+      while entry = file.gets
+        backed_projects << JSON.parse(entry.chomp)
+      end
+    end
+    backed_projects.select {|project| project["name"] == name}
+  end
+
   def self.find_all_backers_by_project_name(name)
     backed_projects = []
     File.open('backers.txt', 'r') do |file|
