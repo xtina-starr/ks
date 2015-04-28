@@ -17,3 +17,4 @@
 {"name":"new-project","target_amount":"2300"}
 {"name":"temp","target_amount":"1234"}
 {"name":"cool-new-project","target_amount":"2004"}
+{"name":"new-project","target_amount":"500"}

@@ -6,17 +6,17 @@ class Project
     @target_amount = target_amount
   end
 
-  def self.create_new_project(input_args)
-    if (input_args[1].length < 4)
-      puts "#{input_args[1]} is too short."
-    elsif (input_args[1].length > 21)
-      puts "#{input_args[1]} is too long."
+  def self.create_new_project(project_name, target_amount)
+    if (project_name.length < 4)
+      puts "#{project_name} is too short."
+    elsif (project_name.length > 21)
+      puts "#{project_name} is too long."
     else
-      new_project = Project.new(input_args[1], input_args[2])
+      new_project = Project.new(project_name, target_amount)
       project_file = File.new("projects.txt", "a")
       project_file.puts new_project.to_json
       project_file.close
-      puts "#{input_args[1]} was created with a target of $#{input_args[2]}"
+      puts "#{project_name} was created with a target of $#{target_amount}"
     end
   end
 

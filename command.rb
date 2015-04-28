@@ -3,11 +3,11 @@ class Command
   def initialize(args)
     case args[0]
     when "project"
-      project(args)
+      project(args[1], args[2])
     when "back"
       back(args)
     when "list"
-      list(args)
+      list(args[1])
     when "backer"
       backer(args)
     else
@@ -15,11 +15,11 @@ class Command
     end
   end
 
-  def project(args)
-    if (args[1] == nil)
+  def project(project_name, target_amount)
+    if (project_name == nil)
       puts "Please provide a project name."
     else
-      Project.create_new_project(args)
+      Project.create_new_project(project_name, target_amount)
     end
   end
 
@@ -37,25 +37,25 @@ class Command
     end
   end
 
-  def list(args)
+  def list(name)
     # input: <project name>
 
     # Make sure input arg is passed in with 'list' command
-    if (args[1] == nil)
+    if (name == nil)
       puts "Please provide a project name."
     else
 
-      project = Project.find_by_name(args[1]).first
+      project = Project.find_by_name(name).first
 
       if (project)
-        Backer.find_all_backers_by_project_name(args[1]).each do |back|
+        Backer.find_all_backers_by_project_name(name).each do |back|
           puts "#{back["name"]} backed #{back["project_name"]} for #{back["backing_amount"]}"
         end
-        amt_needed = project["target_amount"].to_i - Backer.return_backed_amt_for_project(args[1])
+        amt_needed = project["target_amount"].to_i - Backer.return_backed_amt_for_project(name)
 
-        puts amt_needed <= 0 ? args[1] + " is successful!" : args[1] + " needs $#{amt_needed} more dollars to be successful"
+        puts amt_needed <= 0 ? name + " is successful!" : name + " needs $#{amt_needed} more dollars to be successful"
       else
-        puts args[1] + " does not exist."
+        puts name + " does not exist."
       end
     end
   end
