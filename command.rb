@@ -9,7 +9,7 @@ class Command
     when "list"
       list(args[1])
     when "backer"
-      backer(args)
+      backer(args[1])
     else
       puts "#{args[0]} is not recognized as a command."
     end
@@ -60,20 +60,20 @@ class Command
     end
   end
 
-  def backer(args)
+  def backer(backer_name)
     # Make sure input arg is passed in with 'backer' command
-    if args[1] == nil
+    if backer_name == nil
       puts "Please provide a backer name."
     else
 
-      projects_backed_by_given_name = Backer.find_all_project_by_backer(args[1])
+      projects_backed_by_given_name = Backer.find_all_project_by_backer(backer_name)
 
       if (projects_backed_by_given_name.length > 0)
         projects_backed_by_given_name.each do |backed_project|
           puts "Backed " + backed_project["project_name"] + " for " + backed_project["backing_amount"]
         end
       else
-        puts args[1] + " has not backed any projects."
+        puts backer_name + " has not backed any projects."
       end
     end
   end
