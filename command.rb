@@ -5,7 +5,7 @@ class Command
     when "project"
       project(args[1], args[2])
     when "back"
-      back(args)
+      back(args[1], args[2], args[3], args[4])
     when "list"
       list(args[1])
     when "backer"
@@ -23,14 +23,15 @@ class Command
     end
   end
 
-  def back(args)
-    if (args[1] == nil)
+  def back(given_name, project, credit_card, backing_amount)
+    # back <given name> <project> <credit card number> <backing amount>
+    if (given_name == nil)
       puts "Please provide a project name."
     else
-      exists = Project.find_by_name(args[2]).count > 0
+      exists = Project.find_by_name(project).count > 0
 
       if (exists)
-        Backer.back_project(args)
+        Backer.back_project(given_name, project, credit_card, backing_amount)
       else
         puts "Project does not exist. Please enter a valid project name."
       end

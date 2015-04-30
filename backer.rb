@@ -10,19 +10,20 @@ class Backer
     @backing_amount = backing_amount
   end
 
-  def self.back_project(input_args)
-    if(input_args[1].length < 4 || input_args[1].length > 21)
-      puts "#{input_args[1]} must not be shorter that 4 characters and no longer than 20"
-    elsif (Backer.credit_card_exist(input_args[3]))
+  def self.back_project(given_name, project, credit_card, backing_amount)
+    # given_name, project, credit_card, backing_amount
+    if(given_name.length < 4 || given_name.length > 21)
+      puts "#{given_name} must not be shorter that 4 characters and no longer than 20"
+    elsif (Backer.credit_card_exist(credit_card))
       puts "ERROR: That card has already been added by another user!"
     else
-      if (Backer.valid_cc?(input_args[3]))
-        new_backer = Backer.new(input_args[1], input_args[2], input_args[3], input_args[4])
+      if (Backer.valid_cc?(credit_card))
+        new_backer = Backer.new(given_name, project, credit_card, backing_amount)
 
         backer_file = File.new("backers.txt", "a")
         backer_file.puts new_backer.to_json
         backer_file.close
-        puts "#{input_args[1]} backed project #{input_args[2]} for $#{input_args[4]}"
+        puts "#{given_name} backed project #{project} for $#{backing_amount}"
       else
         puts "ERROR: This card is invalid"
       end
