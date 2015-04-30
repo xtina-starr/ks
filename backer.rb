@@ -12,7 +12,7 @@ class Backer
 
   def self.back_project(given_name, project, credit_card, backing_amount)
     # given_name, project, credit_card, backing_amount
-    if(given_name.length < 4 || given_name.length > 21)
+    if(given_name.length < 4 || given_name.length > 20)
       puts "#{given_name} must not be shorter that 4 characters and no longer than 20"
     elsif (Backer.credit_card_exist(credit_card))
       puts "ERROR: That card has already been added by another user!"
