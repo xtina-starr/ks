@@ -66,7 +66,6 @@ class Command
     if backer_name == nil
       puts "Please provide a backer name."
     else
-
       projects_backed_by_given_name = Backer.find_all_project_by_backer(backer_name)
 
       if (projects_backed_by_given_name.length > 0)
