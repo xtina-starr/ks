@@ -13,9 +13,9 @@ class Project
       puts "#{project_name} is too long."
     else
       new_project = Project.new(project_name, target_amount)
-      project_file = File.new("projects.txt", "a")
-      project_file.puts new_project.to_json
-      project_file.close
+      project_file = File.new("projects.txt", "a") # maybe move to separate class
+      project_file.puts new_project.to_json # wrap in it's own method
+      project_file.close # wrap in it's own method
       puts "#{project_name} was created with a target of $#{target_amount}"
     end
   end
